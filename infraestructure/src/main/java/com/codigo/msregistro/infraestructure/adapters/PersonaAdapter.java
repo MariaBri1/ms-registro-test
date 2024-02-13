@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,26 +33,50 @@ public class PersonaAdapter implements PersonaServiceOut {
     private String tokenApi;
     @Override
     public PersonaDTO crearPersonaOut(RequestPersona requestPersona) {
-        return null;
+        ResponseReniec datosReniec = getExecutionReniec(requestPersona.getNumDoc());
+        personaRepository.save(getEntity(datosReniec,requestPersona));
+        return personaMapper.mapToDto(getEntity(datosReniec,requestPersona));
     }
 
     @Override
     public Optional<PersonaDTO> obtenerPersonaOut(Long id) {
-        return Optional.empty();
+        return Optional.ofNullable(personaMapper.mapToDto(personaRepository.findById(id).get()));
     }
 
     @Override
     public List<PersonaDTO> obtenerTodosOut() {
-        return null;
+        List<PersonaDTO> personaDTOList = new ArrayList<>();
+        List<PersonaEntity> entities = personaRepository.findAll();
+        for(PersonaEntity persona : entities){
+            PersonaDTO personaDTO = personaMapper.mapToDto(persona);
+            personaDTOList.add(personaDTO);
+        }
+        return personaDTOList;
     }
 
     @Override
     public PersonaDTO actualizarOut(Long id, RequestPersona requestPersona) {
+        boolean existe = personaRepository.existsById(id);
+        if(existe){
+            Optional<PersonaEntity> entity = personaRepository.findById(id);
+            ResponseReniec responseReniec = getExecutionReniec(requestPersona.getNumDoc());
+            personaRepository.save(getEntityUpdate(responseReniec,entity.get()));
+            return personaMapper.mapToDto(getEntityUpdate(responseReniec,entity.get()));
+        }
         return null;
     }
 
     @Override
     public PersonaDTO deleteOut(Long id) {
+        boolean existe = personaRepository.existsById(id);
+        if(existe){
+            Optional<PersonaEntity> entity = personaRepository.findById(id);
+            entity.get().setEstado(0);
+            entity.get().setUsuaDelet(Constants.AUDIT_ADMIN);
+            entity.get().setDateDelet(getTimestamp());
+            personaRepository.save(entity.get());
+            return personaMapper.mapToDto(entity.get());
+        }
         return null;
     }
 
