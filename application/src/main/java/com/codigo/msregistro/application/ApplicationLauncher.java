@@ -1,13 +1,11 @@
-package com.codigo.msregistro;
+package com.codigo.msregistro.application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MsRegistroApplication {
-
+public class ApplicationLauncher {
     public static void main(String[] args) {
-        SpringApplication.run(MsRegistroApplication.class, args);
+        SpringApplication.run(ApplicationLauncher.class, args);
     }
-
 }

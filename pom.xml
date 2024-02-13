@@ -11,8 +11,14 @@
     <groupId>com.codigo</groupId>
     <artifactId>ms-registro</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>ms-registro</name>
     <description>ms-registro</description>
+    <modules>
+        <module>domain</module>
+        <module>application</module>
+        <module>infraestructure</module>
+    </modules>
     <properties>
         <java.version>17</java.version>
         <spring-cloud.version>2022.0.5</spring-cloud.version>
