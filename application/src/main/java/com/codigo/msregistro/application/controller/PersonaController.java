@@ -26,7 +26,6 @@ public class PersonaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PersonaDTO>obtenerPersona(@PathVariable Long id){
-
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(personaServiceIn.obtenerPersonaIn(id).get());
