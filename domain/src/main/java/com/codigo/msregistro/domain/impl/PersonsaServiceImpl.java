@@ -5,12 +5,13 @@ import com.codigo.msregistro.domain.aggregates.request.RequestPersona;
 import com.codigo.msregistro.domain.ports.in.PersonaServiceIn;
 import com.codigo.msregistro.domain.ports.out.PersonaServiceOut;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class PersonsaServiceImpl implements PersonaServiceIn {
 
